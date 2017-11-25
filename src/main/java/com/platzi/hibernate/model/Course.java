@@ -10,11 +10,24 @@ import javax.persistence.Id;
 
 //import com.platzi.hibernate.model.Teacher;
 
+@Entity
+@Table(name="course")
 public class Course implements Serializable {
+	@Id
+	@Column(name="id_course")
+	@GeneratedValue(strategy=GenerationType.IDENTITY) //Esto significa que este campo es un campo identidad autoincremental
 	private Long idCourse;
+	
+	@Column(name="name")
 	private String name;
+	
+	@Column(name="themes")
 	private String themes;
+	
+	@Column(name="project")
 	private String project;
+	
+	@Column(name="teacher")
 	private Teacher teacher;
 	
 	public Course() {
