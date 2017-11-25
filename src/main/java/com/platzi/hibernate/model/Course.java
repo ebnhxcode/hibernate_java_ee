@@ -40,7 +40,7 @@ public class Course implements Serializable {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Course(String name, String themes, String project, Teacher teacher) {
+	public Course(String name, String themes, String project /*, Teacher teacher*/) {
 		super();
 		this.name = name;
 		this.themes = themes;
