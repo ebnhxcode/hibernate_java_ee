@@ -4,10 +4,13 @@ package com.platzi.hibernate.model;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Table;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 @Table(name="teacher_social_media")
@@ -16,9 +19,18 @@ public class TeacherSocialMedia implements Serializable {
 	@Column(name="id_teacher_social_media")
 	@GeneratedValue(strategy=GenerationType.IDENTITY) //Esto significa que este campo es un campo identidad autoincremental
 	private Long IdTeacherSocialMedia;
-	private Teacher teacher;
-	private SocialMedia socialMedia;
+	
+	@Column(name="nickname")
 	private String nickname;
+	
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="id_teacher")
+	private Teacher teacher;
+	
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="id_social_media")
+	private SocialMedia socialMedia;
+
 	
 	public TeacherSocialMedia() {
 		super();

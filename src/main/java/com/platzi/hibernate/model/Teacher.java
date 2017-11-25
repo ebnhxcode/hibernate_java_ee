@@ -3,6 +3,7 @@ package com.platzi.hibernate.model;
 import java.io.Serializable;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 //import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Table;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -33,6 +35,9 @@ public class Teacher implements Serializable {
 	//mappedBy indica de donde viene la relacion, de donde se esta mapeando y con el objeto instanciado en la clase Teacher automatic. se hace la relacion
 	@OneToMany(mappedBy="teacher") 
 	private Set<Course> courses;
+	
+	@OneToMany(cascade=CascadeType.ALL)
+	@JoinColumn(name="id_teacher")
 	private Set<TeacherSocialMedia> teacherSocialMedias;
 	
 	public Teacher() {
