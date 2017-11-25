@@ -3,10 +3,13 @@ package com.platzi.hibernate.model;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Table;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.JoinColumn;
 
 //import com.platzi.hibernate.model.Teacher;
 
@@ -27,7 +30,10 @@ public class Course implements Serializable {
 	@Column(name="project")
 	private String project;
 	
-	@Column(name="teacher")
+	//fetch indica que al traer los datos de course, forza traer tambien los datos relacionados con teacher
+	@ManyToOne(optional=true,fetch=FetchType.EAGER)
+	@JoinColumn(name="id_teacher")
+	
 	private Teacher teacher;
 	
 	public Course() {
