@@ -1,5 +1,7 @@
 package com.platzi.hibernate.model;
 import java.io.Serializable;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,6 +22,8 @@ public class SocialMedia implements Serializable {
 	
 	@Column(name="icon")
 	private String icon;
+	
+	private Set<TeacherSocialMedia> teacherSocialMedias;
 	
 	public SocialMedia() {
 		super();
@@ -46,5 +50,11 @@ public class SocialMedia implements Serializable {
 	}
 	public void setIcon(String icon) {
 		this.icon = icon;
+	}
+	public Set<TeacherSocialMedia> getTeacherSocialMedias() {
+		return teacherSocialMedias;
+	}
+	public void setTeacherSocialMedias(Set<TeacherSocialMedia> teacherSocialMedias) {
+		this.teacherSocialMedias = teacherSocialMedias;
 	}
 }

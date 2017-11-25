@@ -1,6 +1,8 @@
 package com.platzi.hibernate.model;
 
 import java.io.Serializable;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,6 +24,10 @@ public class Teacher implements Serializable {
 	
 	@Column(name="avatar")
 	private String avatar;
+	
+	//Estas son colecciones del tipo de la clase
+	private Set<Course> courses;
+	private Set<TeacherSocialMedia> teacherSocialMedias;
 	
 	public Teacher() {
 		super();
@@ -49,9 +55,16 @@ public class Teacher implements Serializable {
 	public void setAvatar(String avatar) {
 		this.avatar = avatar;
 	}
-	
-	
-	
-	
-	
+	public Set<Course> getCourses() {
+		return courses;
+	}
+	public void setCourses(Set<Course> courses) {
+		this.courses = courses;
+	}
+	public Set<TeacherSocialMedia> getTeacherSocialMedias() {
+		return teacherSocialMedias;
+	}
+	public void setTeacherSocialMedias(Set<TeacherSocialMedia> teacherSocialMedias) {
+		this.teacherSocialMedias = teacherSocialMedias;
+	}
 }
