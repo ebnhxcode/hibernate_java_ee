@@ -1,0 +1,1046 @@
+Curso de Plazti Enterprise Edition:
+
+#####################################################################
+#####################################################################
+Video #1 - ¿Que vamos a construir?:
+
+Da la bienvenida al curso.
+Como construir aplicaciones empresariales con JavaEE. 
+Como integrar Hibernate, Spring para crear RestApi con todos los estandares para crear apps web o mobiles.
+
+#####################################################################
+#####################################################################
+Video #2 - Java SE vs Java EE:
+
+Java EE vs Java SE
+
+Java SE se enfoca a las plataformas mas simples, pueden ser web o moviles.
+Java EE es una version efocada a aplicaciones empresariales, tambien pueden ser aplicaciones web o mobiles 
+
+No son rivales, son plataformas independientes con un proposito distinto, es mas bien una escala de aprendizaje,
+JavaSE se enfoca en la sintaxis del lenguaje, aplicaciones mas basicas, pero Java SE nos enseña a desarrollar aplicaciones web
+con mucha logica de negocio o mucho de backend.
+
+#####################################################################
+#####################################################################
+Video #3 - ¿Como funcionan las aplicaciones en Java EE?:
+
+Estas aplicaciones nacen por la necesidad de desarrollar aplicaciones distribuidas y que estas puedan funcionar 
+en entornos separados (multiplataforma y multi SO).
+Esto quiere decir que necesitaremos una red para unir todos esos componentes, ese alguien va a ser un servidor, 
+esto permitira que la informacion se transfiera de un medio a otro.
+
+Java EE se encuentra, velocidad, seguridad y confiabilidad, ya que sera un servidor dedicado para cumplir 
+con todas las necesidades que se requieren para montar una aplicacion, esto nos da alta confiabilidad.
+
+Servidores de aplicaciones: 
+
+Existen servidores que son de pago y otros que no lo son, como por ejemplo:
+
+De Pago:
+	WebLogic: Oracle
+	JBoss Enterprise Application Platform: Red Hat
+	WebSphere: IBM
+
+Gratuitos o servidores open source:
+	JOnAs: ObjectWeb
+	Wildfly: Version de JBoss por la comunidad
+	Glassfish: Oracle
+	Gernónimo y TomEE: Apache
+
+Apache tomcat no esta incluido como servidor de aplicaciones ya que Tomcat es un CONTENEDOR de APLICACIONES:
+
+Diferencias entre Contenedor Web y Servidor Web
+
+Contenedor Web: Ejecucion de Servlets(), esta diseñado unicamente par atrabajar con servlets, solo con Java.
+
+Servidore Web: Ejecuta muchos tipos de aplicaciones web, recursos, gestiona peticiones, y además también pueden tener un Contenedor Web.
+
+IDE para trabajar Java EE:
+	Eclipse
+	Netbeans
+
+#####################################################################
+#####################################################################
+Video #4 - Hola mundo con JSP:
+
+Desarrollo de una aplicacion básica.
+
+IDE usado, eclipse
+
+Para crear un proyecto por primera vez, en la pantalla principal de eclipse clickear en "Create a new Java EE Web Project"
+
+Pasos para crear el proyecto.
+Definir el nombre
+Next
+Next
+Configuracion de del contexto (Context) y Content directory
+	Context root: es el nombre del proyecto
+	Content Directory (Web Content) es donde estaran todos nuestros archivos jsp y html del proyecto
+Finish
+
+Y listo.
+
+Luego se puede ver el sistema de archivos y se veran los archivos de proyecto y los compilados del sistema.
+
+-
+
+JSP -> Java Server Pages
+Diseñado par acrear páginas web dinámicas.
+HTML + Javascript + CSS + Java
+<% Date d = new Date(); %>
+
+#####################################################################
+#####################################################################
+Video #5 - Corriendo nuestra aplicacion en apache Tomcat:
+Para corregir los errores de nuestra nueva aplicacion es necesario agregar un nuevo runtime, 
+para ello dar click derecho en el proyecto, 
+luego click en propiedades y buscar la opcion "Java Facets"
+y ahí buscar la pestaña "Run Times", desde ahi agregar una nueva Run Time, en este caso Apache Tomcat
+Clic en new y seleccionar la version de Apache Tomcat a utilizar, en este caso usamos la v8.0, clic en next
+Definir el nombre del servidor Tomcat o dejar por default, luego en Tomcat installation directory, click en browse
+para buscar el servidor descargado o la version descargada siempre que se respete la Version 8 escogida.
+(Se puede buscar en google como apache tomcat download)
+
+Revisar bien la version de Java sdk a utilizar, aveces toma por defecto la version 7 y en este caso es requerida la version 8.
+
+Para configurar el servidor, se hace clic en servers (pestaña server, en caso de no encontrarse, 
+se puede encontrar en window->show view de las pestañas del IDE ) 
+y a partir del runtime agregado se puede asociar el servidor al runtime, se asocia el proyecto al servidor creado y finalizar.
+
+Luego para probar, echar a correr la aplicacion sobre el servidor.
+
+#####################################################################
+#####################################################################
+Video #6 - Java Servlets:
+
+El MVC en Java:
+	Las vistas -> son todos nuestros archivos html y jsp
+	Los controladores -> son todos nuestros servlets
+	Los modelos -> son todas nuestras clases POJO o Beans
+
+El papel que juegan los servlets en el proyecto, es que son nuestro controlador, 
+actualmente con el ejemplo visto, se puede accesar directamente a esos servlets o a ese archivo jsp
+pero la idea es tratar de hacer que el acceso al proyecto o a los archivos del proyecto
+sean mas restringidos, permitiendo que sea mas seguro o mas bien truncando las rutas de acceso
+a esta capa del desarrollo, los servlets nos van a ayudar a mapear las direcciones de las URL,
+van a ser quienes controlen el comportamiento de nuestros archivos jsp/html.
+
+¿Que es un Servlet?
+Es una clase de Java, que hereda de HttpServlet, por herencia, tiene los metodos doGet() y doPost(),
+que son los métodos mas importantes para recibir los request de peticiones http y se generan
+acciones hacia las entidades.
+
+Para crear un servlet (o controlador, llamese como acomode mas) se puede crear una clase y heredar se HttpServlet
+ó
+Crear un servlet através del IDE, en este caso para eclipse, sobre Java Resources, click derecho y new->servlet,
+se desplegara una ventana para definir el servlet, definir el nombre, la carpeta donde será almacenado,
+el Java Package que generalmente es el nombre de identificador que posee el proyecto, por ejemplo,
+
+	com.empresa.packageName
+
+Luego, next para continuar con la creacion, luego se define la URL mapping, que es la ruta por el cual
+se accederá a este servlet, (debe ser igual a la ruta/action definida, por ejemplo, a un form)
+
+En el servler/controlador, que es una clase heredada de HttpServlet, sobre donde se crea la clase,
+se debe definir la anotacion o ruta por el cual se va a activar el controlador, ejemplo:
+
+	@WebServlet("/login")
+	
+Servlet: Es una clase que hereda métodos de la clase HttpServlet, una vez heredados tiene la capacidad de manejar cualquier tipo de request, para identificarlo puedes ubicar dentro del código sus métodos doGet o doPost o atraves de su anotación (@WebServlet) + el nombre que le quieras dar como URL.
+
+#####################################################################
+#####################################################################
+Video #7 - Java Beans:
+
+Anteriormente en Java SE se conocian como POJO, Plain On Java Object, osea un objeto en lo mas puro posible.
+
+Beans, un bean es muy similar a un POJO pero hereda de la clase Serializable.
+
+Bean:
+	Al menos un Constructor sin Argumentos
+	Atributos de clase deben ser privados
+	Sus propiedades deben ser accesibles mediante métodos get y set
+	Las propiedades DEBEN ser privadas, es decir que tienen que estar encapsuladas, no se pueden acceder a ellos, esto es estricto,
+	No se pueden acceder directamente, deben ser accesados mediante getters y setters.
+	
+Ejemplo de un Bean:
+
+public class Alumnos implements Serializable () {
+	private String nombre;
+	private String matricula;
+	public Alumno () {}
+	public String getNombre () {}
+	public void setNombre (String nombre) {}
+	public String getMatricula () {}
+	public void setMatricula (String matricula) {}
+}
+
+La gran diferencia entre un POJO y un Bean es que el Bean debe ser Serializable, dado que en este punto,
+serializable se encarga de crear el flujo de informacion lo mas simple posible para permitir la transferencia
+de informacion mediante la red.
+
+
+#####################################################################
+#####################################################################
+Video #8 - MVC en nuestra Aplicacion:
+
+Operadores Ternarios, son operadores logicos que retornan un valor, reemplazan al if y al else básico, su sintaxis es:
+	
+	return a==b?true:false;
+	
+EJB significa Enterprise Java Beans son componentes que facilit an el acceso los servicios de un servidor de aplicaciones por medio de Contenedores EJB, estos manejan la seguridad, la persistencia, el manejo de transacciones. A diferencia de un JavaBean es que un JavaBean se puede usar directamente en un programa y un EJB debe de haber un intermediario que haga uso de el para usarse ahora si en un programa
+		
+una aplicación empresarial Java EE (archivo .ear) es un conjunto de módulos, siendo un módulo una aplicación Web completa (empaquetada en un archivo .war) o un conjunto de objetos distribuidos EJBs (empaquetados en un archivo .jar).
+
+Los EJB (Enterprise Java Bean) se usan para dar acceso a los servicios del contenedor de aplicaciones (JBoss,WAS,OAS,ETC), estos servicios son seguridad,transacciones,persistencia.etc.
+
+Y otra cosa son los JavaBean estos son clases simples en java que debe tener un constructor sin argumentos, tiene declarado todos sus atributos como privados y para cada uno de ellos tiene un método setter y getter.¿Para que sirven? para encapsular varios objetos en un único objeto y así hacer uso de un solo objeto en lugar de varios.
+
+Para crear un Bean:
+
+Click Derecho carpeta src
+New --> Package --> Colocar Name
+Click Derecho Package --> New --> Class --> Colocar Name
+Implementar la interfaz Serializable
+Encapsular los Atributos (private)
+Colocar Getters y Setters (Click Derecho --> Source --> Generate Getters and Setters)
+Generar el Constructor (Click Derecho --> Source --> Generate Constructor from SuperClass)
+
+RequestDispatcher es un generador de respuestas, es quien se encarga de gestionar las peticiones I/O (Entrada o Salida)
+que debemos enviar o recibir.
+
+Ej:
+protected void doPost (HttpServletRequest request, HttpServerResponse response) throws {
+	RequestDispatcher dispatcher = null;
+	if (true) {
+		dispatcher = request.getRequestDispatcher("file1.jsp");
+	} else {
+		dispatcher = request.getRequestDispatcher("file2.jsp");
+	} 
+
+	dispatcher.forward(request, response);
+}
+
+
+#####################################################################
+#####################################################################
+Video #9 - Archivos WAR empaquetados y su Estructura:
+
+Empaquetados:
+Luego de todo el trabajo es necesario exportar estos archivos al servidor, y si exportamos netamente tal 
+los archivos .java, .jsp o html seria inseguro ya uqe estariamos exponiendo todo nuestro codigo fuente a
+completa dispposicion de un posible atacante, es por eso que tomcat permite leer archivos empaquetados
+que han sido puestos en produccion para asi deployar nuestras aplicaciones, a estos archivos se les llama WAR
+
+War es un archivo web el cual significa -> Web application ARchive
+En un war vamos a guardar todos los archivos principales de nuestro proyecto, bytecode, jsp, js, css, recursos, etc.
+
+WAR (Web ARchive): Es un archivo que contiene componentes para una aplicacion web de Java y se estructuran siguiendo una jerarquia (https://docs.oracle.com/cd/E13222_01/wls/docs90/webapp/configurewebapp.html), un archivo de esta extension es el vehiculo para pasar tu aplicacion web a produccion (target environment).
+
+#####################################################################
+#####################################################################
+Video #10 - Asistentes Inteligentes, Maven:
+
+Descargar cada libreria y volver a generar un archivo WAR con todo el codigo del proyecto
+resulta ser repetitivo y tedioso, lo cual desconcentra al momento de solo enfocarse en desarrollar
+el proyecto, es por eso que existen agentes inteligentes capaces de descargar librerias de terceros
+e importarlos automaticamente al proyecto. Maven es uno de ellos.
+
+Si queremos integrar librerías debemos hacerlo dando click derecho en el proyecto Properties -> Java Build Path -> Libraries y seleccionar la librería previamente descargada
+
+Asistentes Inteligentes: 
+	Nos ayudan a crear proyectos basados en plantillas
+	Descargan librerias de terceros (JAR's)
+	Crean todos los componentes y los archivos ejecutables
+	Con un asistentes habria un catalogo de plantillas y automaticamante se haria el directorio de archivos
+
+Maven:
+	Es un proyecto de apache
+	Permite la Configuracion y Construccion basado en XML
+	Utiliza el archivo pom.xml (Project Object Model) que permite/ayuda:
+		Describir el proyecto a construir
+		Incluye las dependencias
+		Ayuda con la compilacion de codigo
+		Ayuda a empaquetar el proyecto WAR o archivos JAR del proyecto
+
+Maven - Estructura de archivos
+	project_name
+		src/main/java
+		src/main/resources
+		src/test/java
+		JRE System Library
+		Maven Dependencies
+		src
+		target
+		pom.xml
+		
+
+
+#####################################################################
+#####################################################################
+Video #11 - Gradle:
+
+Gradle tambien es un Asistente Inteligente, muy popular para proyectos en Android pues, permite 
+construir el proyecto y crear ejecutables para el proyecto, trabajar su estructura de archivos
+e integrar las dependencias al proyecto.
+
+Gradle:
+	Está basado en Groovy, groovy es un lenguaje Puramente Orientado a Objetos
+	Usa Domain Specified Languaje -> JSON, es una sintaxis, un modo de analizar la infomacion y abstraerla en objetos en sintaxis JSON
+
+El Build de Gradle:
+	archivo build.gradle:
+		Dependencias
+		Compilacion del codigo
+		Empaquetado
+
+Ejemplo:
+	static mapping = {
+		table 'person'
+		columns {
+			name column:'name'
+		}
+	}
+
+Gradle - Estructura de Archivos
+	project_name
+		src/main/java
+		src/main/resources
+		src/test/java
+		src/test/resources
+		JRE System Library
+		Gradle Dependencies
+		build
+		src
+		build.gradle
+
+
+#####################################################################
+#####################################################################
+Video #12 - Aplicaciones Orientadas a Presentacion vs Servicios:
+
+Aplicaciones Orientadas a Presentación son todas esas aplicaciones enfocadas a generar vistas que pueda leer un navegador, vistas HTML, es decir Sitios Web Dinámicos.
+
+Aplicaciones Orientadas a Servicios son aplicaciones que se enfocan en el backend y la vista la presentan en formato JSON.
+
+En nuestro proyecto dejaremos de mostrar la información en formato HTML en cambio lo haremos en formato JSON.
+
+
+Las aplicaciones orientadas a presentacion son aquellas que se pueden representar en el html como una 
+esquematizacion o interpretacion del proyecto a traves de nuestras vistas.
+(HTML es un lenguaje de esquematizacion). Informacion formateada en HTML.
+
+Las aplicaciones orientadas a servicios se enfocan solo en el backend y usan el formato JSON como vista.
+Informacion formateada en JSON.
+
+
+#####################################################################
+#####################################################################
+Video #13 - IDE Spring Tool Suite:
+
+Spring tool suite
+	Esta basado en Eclipse
+	Fue creado por la comunidad SpringSource
+	Nos ayuda a crear plantillas de proyectos basados en Spring
+	Maven ya viene integrado
+
+#####################################################################
+#####################################################################
+Video #14 - Análisis del Problema [Nuestro Proyecto]:
+
+Se plantea el proyecto a desarrollar, definiendo en un diagrama de entidad relacion
+la definicion de las tablas a relacionar para el proyecto. 	
+
+Nuestro proyecto será un catálogo de Teachers y Courses.
+
+Analizando el Problema tendremos las siguientes relaciones:
+
+La relación entre Teacher y Course será de 1:M (1 teacher puede tener muchos courses pero 1 course solo puede ser dado por 1 teacher)
+Por ejemplo:
+Teacher Anahí Salgado solo puede dar el curso de Java EE (nuestro caso particular ???? )
+
+La relación entre Teacher y SocialMedia será M:M (1 Teacher puede tener muchas Social Medias y una Social Media puede estar vinculada a muchos Teachers)
+Por ejemplo:
+Teacher Anahí puede tener la Social Media Facebook, Twitter y Linkedin pero la Social Media Facebook puede tener muchos Teachers de Platzi.
+
+Por esta razón separaremos la relación generando una entidad más: TeacherSocialMedia que reúna las relaciones de las tablas anteriores, ahí encontraremos la vinculación del teacher contra el tipo de red social y su respectivo nickname
+
+#####################################################################
+#####################################################################
+Video #15 - Diagramas de Entidad Relacion y UML:
+
+-- phpMyAdmin SQL Dump
+-- version 4.6.6deb5
+-- https://www.phpmyadmin.net/
+--
+-- Servidor: localhost:3306
+-- Tiempo de generación: 17-12-2017 a las 15:33:44
+-- Versión del servidor: 10.1.29-MariaDB-6
+-- Versión de PHP: 5.6.32-1+ubuntu16.04.1+deb.sury.org+2
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Base de datos: `platziprofesores`
+--
+CREATE DATABASE IF NOT EXISTS `platziprofesores` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `platziprofesores`;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `course`
+--
+
+DROP TABLE IF EXISTS `course`;
+CREATE TABLE `course` (
+  `id_course` int(11) NOT NULL,
+  `id_teacher` int(11) DEFAULT NULL,
+  `name` varchar(250) NOT NULL,
+  `themes` text,
+  `project` varchar(250) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `course`
+--
+
+INSERT INTO `course` (`id_course`, `id_teacher`, `name`, `themes`, `project`) VALUES
+(1, NULL, 'Curso de Java Avanzado', 'Tema 1', 'RestAPI');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `social_media`
+--
+
+DROP TABLE IF EXISTS `social_media`;
+CREATE TABLE `social_media` (
+  `id_social_media` int(11) NOT NULL,
+  `name` varchar(250) NOT NULL,
+  `icon` varchar(250) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `teacher`
+--
+
+DROP TABLE IF EXISTS `teacher`;
+CREATE TABLE `teacher` (
+  `id_teacher` int(11) NOT NULL,
+  `name` varchar(250) NOT NULL,
+  `avatar` varchar(250) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `teacher`
+--
+
+INSERT INTO `teacher` (`id_teacher`, `name`, `avatar`) VALUES
+(1, 'Esteban Ramos', 'urlAvatar');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `teacher_social_media`
+--
+
+DROP TABLE IF EXISTS `teacher_social_media`;
+CREATE TABLE `teacher_social_media` (
+  `id_teacher_social_media` int(11) NOT NULL,
+  `id_teacher` int(11) NOT NULL,
+  `id_social_media` int(11) NOT NULL,
+  `nickname` varchar(250) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Índices para tablas volcadas
+--
+
+--
+-- Indices de la tabla `course`
+--
+ALTER TABLE `course`
+  ADD PRIMARY KEY (`id_course`),
+  ADD KEY `id_teacher` (`id_teacher`);
+
+--
+-- Indices de la tabla `social_media`
+--
+ALTER TABLE `social_media`
+  ADD PRIMARY KEY (`id_social_media`);
+
+--
+-- Indices de la tabla `teacher`
+--
+ALTER TABLE `teacher`
+  ADD PRIMARY KEY (`id_teacher`);
+
+--
+-- Indices de la tabla `teacher_social_media`
+--
+ALTER TABLE `teacher_social_media`
+  ADD PRIMARY KEY (`id_teacher_social_media`),
+  ADD KEY `id_teacher` (`id_teacher`),
+  ADD KEY `id_social_media` (`id_social_media`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `course`
+--
+ALTER TABLE `course`
+  MODIFY `id_course` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT de la tabla `social_media`
+--
+ALTER TABLE `social_media`
+  MODIFY `id_social_media` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `teacher`
+--
+ALTER TABLE `teacher`
+  MODIFY `id_teacher` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT de la tabla `teacher_social_media`
+--
+ALTER TABLE `teacher_social_media`
+  MODIFY `id_teacher_social_media` int(11) NOT NULL AUTO_INCREMENT;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+#####################################################################
+#####################################################################
+Video #16 - Creando una Base de Datos:
+
+Se adjunta script de la base de datos (Video 15).
+
+#####################################################################
+#####################################################################
+Video #17 - Poniendo Relaciones en nuestra Base de Datos:
+
+Se adjunta script de la base de datos (Video 15).
+
+#####################################################################
+#####################################################################
+Video #18 - Creando un Proyecto de Java que se conecta a base de datos:
+
+En el video anterior creamos nuestra base de datos, en este trabajaremos con nuestro diagrama UML.
+
+Abriremos Spring Tool Suite y crearemos un nuevo proyecto basado en Maven:
+
+Damos Click derecho New->Other->Maven->Maven Project
+Damos Next -> Next -> Next
+Escribimos el Group Id (nuestro package): com.platzi
+Ponemos el Artifact Id (nombre proyecto): hibernate
+Damos click en Finish
+Abrimos nuestro archivo pom.xml para integrar la dependencia de MySQL
+
+Puedes obtener dependecias del sitio: https://mvnrepository.com/
+
+Buscaremos MySQL y seleccionamos la versión 5.1.21
+
+En el resultado copiamos la correspondiente a Maven:
+
+<dependency>
+<groupId>mysql</groupId>
+<artifactId>mysql-connector-java</artifactId>
+<version>5.1.21</version>
+</dependency>
+
+#####################################################################
+#####################################################################
+Video #19 - ¿Que es Hibernate?:
+
+Hibernate es un ORM, asi de simple, un Object Relational Mapping
+	Es una herramienta de Mapeo Objeto Relacional
+	Facilita el mapeo de atributos entre una base de datos relacional y el modelo de objetos
+	Nos permite trabajar la BD a nivel de BD, trabaja con base de datos relacionales
+	Manipula los datos en la base de datos, operando sobre objetos
+	Busca solucionar el problema de la diferencia entre los dos modelos de datos coexistentes en una aplicacion
+	Ayuda a definir los tipos de datos
+	Genera las sentencias SQL evitando el SQL Injection
+	Ayuda al manejo de los resultados de las sentencias SQL
+	Automatiza las consultas y la obtencion de datos mediante objetos
+
+Hibernate trabaja a nivel de 3 capas: 
+	La capa de aplicacion: donde ya se va a enfocar en la interaccion con el usuario
+	
+	La capa de configuracion/anotaciones: donde se definen las configuraciones de conexion con la bbdd, datos de la conexion, posibilidad de ver las querys, etc.
+	Ademas se ejecuta el mapeo de las relaciones a atraves de anotaciones -> @ 
+	
+	La Capa de base de datos: todas las consultas ejecutadas, comunicacion con los modelos definidos
+
+---	
+Hibernate es un ORM (Object Relational Mapping)
+	Es una herramienta que nos permite mapear una base de datos
+	Hibernate esta diseñado para trabajar con bases de datos relacionales.
+	La idea de Hiberante es tener una clase equivalente a una tabla de base de datos incluyendo los campos.
+	Podremos operar los datos operando no sobre tablas sino sobre objetos
+	Busca solucionar el problema de la diferencia entre dos modelos de datos coexistentes en una aplicación
+	Podemos definir tipos de datos
+	Generar sentencias SQL
+	
+Hibernate permite conectarnos a una base de datos a partir de un archivo de configuración llamado hibernate.cfg.xml.
+
+Mapearemos las tablas y campos de una base de datos a partir de Anotaciónes @ en las clases
+
+
+
+
+#####################################################################
+#####################################################################
+Video #20 - Configurando Hibernate en Spring Tool Suite:
+
+Configurando Hibernate en Spring Tool Suite
+Integraremos un Plugin de Hibernate en Spring Tool Suite para tener accesos rápidos a archivos de configuración de Hibernate.
+
+Para integrarlo debemos ir a nuestro IDE Spring Tool Suite:
+
+	Help -> Install New Software
+	Click en Add y colocar un nombre que nos permita identificar el software del Plugin, puede ser Hibernate
+	Iremos al sitio http://download.jboss.org/jbosstools/updates/stable/ para buscar la versión de eclipse en la que está basado nuestro Spring Tool Suite (revisa en la sección de Acerca De o About del IDE)
+	Una vez que seleccionamos la versión de eclipse, entramos a ella y en la parte inferior copiaremos el enlace que se antepone la leyenda “Content has moved to” para nuestro caso es este: https://download.jboss.org/jbosstools/neon/stable/updates/
+	Este enlace lo pegamos en el campo que dejamos pendiente cuando dimos Click en Add y damos click en OK
+	Descargará los paquetes y dentro de JBoss Web and Java EE Development seleccionamos Hibernate Tools y damos click en Siguiente.
+	Descargará el paquete seleccionado, aceptamos los términos y damos click en Finish.
+	En algún punto de la descarga te pedirá permiso de instalar software de terceros e decimos que sí.
+	Se reiniciará el IDE y quedará listo.
+
+#####################################################################
+#####################################################################
+Video #21 - Integrando Hibernate al proyecto y conectando a la base de datos:
+
+Integrando Hibernate al proyecto y conectando a la base de datos
+Crearemos una carpeta llamada resources esta contendrá el archivo de configuración cfg.hbm de hibernate.
+
+Desde nuestro File Explorer vamos al workspace del proyecto
+
+	Entramos a nuestro proyecto hibernate -> src -> main
+	Dentro crearemos la carpeta resources
+	Regresamos al IDE damos click derecho en el proyecto Properties -> Java Build Path -> Source
+	Damos click en Add Folder
+	Buscamos resources la seleccionamos y damos Ok y Apply
+	Cerramos la ventana dando Ok
+	Aparecerá nuestra carpeta, la seleccionamos y le damos click derecho New -> Other -> Hibernate -> Hibernate Configuration File (cfg.xml)
+	
+Nos aparecerá una ventana solicitando los datos de conexión a la base de datos. Llenaremos lo siguiente:
+
+	Driver class: com.mysql.jdbc.Driver
+	Connection URL: jdbc:mysql//localhost:3306/platziprofesores
+	Username: platziprofesores
+	Password: platziprofesores
+	
+Como resultado tendremos un archivo hibernate.cfg.xml con los datos que ingresamos en formato XML.
+
+Por último integraremos la dependecia de Hibernate en el archivo pom.xml, la dependecia se comenzara a descargar automaticamente:
+<dependency>
+<groupId>org.hibernate</groupId>
+<artifactId>hibernate-core</artifactId>
+<version>5.2.6.Final</version>
+</dependency>
+---
+
+#####################################################################
+#####################################################################
+Video #22 - Mapeo y Anotaciones con Hibernate JPA:
+
+Mapeo Hibernate
+	Para cada clase que quedamos persistir debemos crear un archivo XML, es recomendado crear un mapeo para cada tabla que se requiere persistir
+	hbm.xml, todo el mapeo se hacia a traves de este archivo antiguamente esto se hacia pero se hacia un infierno xml, ya que para cada entidad habia un xml
+
+---
+Mapeo y Anotaciones con Hibernate JPA
+Para cada tabla de la base de datos que queramos persistir en el proyecto debemos hacer un mapeo.
+
+Los Mapeos los haremos a partir de Annotations @ de Java
+
+@Entity: Se aplica a la clase e indica que esta clase es una entidad a persistir.
+	Entity solo va a ser un indicador que dice a hibernate que todo lo que esta contenido lo debe persistir.
+
+@Table: Se aplica a la clase indica el nombre de la tabla de la base de datos.
+	Quiere decir que va arriba del nombre de la clase, indica que esta tabla se mapea con el nombre definido en la base de datos.
+	
+@Column: Se aplica a una propiedad Java e indica el nombre de la columna de la tabla.
+	Serian las propiedades del BEAN o del POJO, serian aplican a una propiedad java 
+	e indican el nombre de la columna de la base de datos en la que se persistira la propiedad.
+	
+@Id: Se aplica a una propiedad de la clase e indica que es la clave primaria.
+	Se aplica a una propiedad especifica e indica que es la PK, @id tiene como peculiaridad que va a ser un campo autoincrementado, 
+	a pesar que se ha definido en la base de datos como tal (auto incremental) pero es bueno tambien definirlo en la clase como buena practica.
+	
+@GeneratedValue: Indica que Hibernate deberá generar el valor de la clave primaria
+
+
+
+#####################################################################
+#####################################################################
+Video #23 - Mapeando nuestro proyecto con Hibernate JPA
+
+Haremos el mapeo de nuestros beans SocialMedia, Teacher, Course, TeacherSocialMedia. Todas las anotaciones las traeremos del paquete javax.persistence.*
+
+Primero colocaremos nuestra etiqueta @Entity arriba del nombre de la clase y posteriormente @Table(name=“nombre_tabla_base_datos”) para indicar el nombre de la tabla.
+
+Para los campos usaremos @Column(name=“columna_base_datos”) y en el campo que referencía al identificador colocaremos @Id seguido de @GeneratedValue(strategy=GenerationType.IDENTITY) que indica que se autogenere el identificador.
+
+
+#####################################################################
+#####################################################################
+Video #24 - Anotaciones básicas en nuestro proyecto:
+
+Anotaciones básicas en nuestro proyecto
+Al tener una tabla de llaves que adicionalmente tiene un campo tenemos que mapear también la tabla para mapear el campo, normalmente no sería necesario pues Hibernate se encargaría de generar la relación.
+
+La forma de modelar las relaciones a muchos en Java es manejando colecciones de Objetos
+
+Podemos usar la Colección Set, List, Vector, HashMap, etc.
+
+En el siguiente video se explicara como Hibernet trabaja las relaciones, tambien conocidas como asociaciones.
+
+
+#####################################################################
+#####################################################################
+Video #25 - Relaciones o Asociaciones en Hibernate [One to One, One to Many y Many to Many]:
+
+En Hibernate podemos manejar las relaciones que existen en la base de datos, tenemos las siguientes:
+
+	One to One (Unidireccional): Un objeto tiene una referencia de otro objeto (Solo y unicamente a una relación).
+		Un objeto tenga una referencia a otro objeto de forma que al persistirse el primer objeto, tambien se persista el segundo.
+		
+	One to One (Bidireccional): Los dos objetos tienen referencias uno de otro.
+		Los dos objetos se persisten mutuamente, ambos tienen referencias uno de otro.
+		
+	One to Many: Un objeto tenga una lista de otros objetos
+		Un objeto tenga una lista de otros objetos de forma que al persistirse el objeto principal, tambien se persista la lista de objetos.
+		Aqui tambien se utiliza la notacion @JoinColumn ya que esta notacion nos dira cual es la tabla con la que va la relación.
+		
+
+	Many to Many: Un objeto A tenga una lista de otros objetos B y también que el objeto B a su vez tenga la lista de objetos A
+
+Adicional conoceremos la anotación @JoinColumn que nos idicará el nombre de la columna que une las tablas
+
+Cardinalidad: Es hacia a donde va la relación, incluye uno a uno, uno a muchos y muchos a muchos, saber la direccion hacia
+donde se referencia la relacion es la cardinalidad.
+
+En las relaciones One to Many debemos indicar nuestra entidad owner o padre (que hacen referencia a lo mismo)
+	Entity Owner: Debemos indicar mediante la siguiente anotacion la cardinalidad de la clase a la cual hace referencia como relacion a otra clase
+		 @OneToMany(mappedBy="entity",  cascade = CascadeType.ALL)
+		 
+	Entity no Owner: Debemos indicar el parametro con el que hace la referencia y el tipo de relacion que tiene con su clase owner
+		@ManyToOne(optional = true, fetch = FetchType.EAGER)
+		@JoinColumn(name = "pimary_key")
+		
+Para que quede mas claro, explicacion:
+En la tabla owner (padre) debe ir la notacion @OneToMany cuando la cardinalidad es de uno a muchos
+En la tabla no owner (hija) debe ir la notacion @ManyToOne e indicar con la notacion @JoinColumn, el nombre del campo pk con el que hace la referencia
+
+
+En la relacion Many to Many la cardinalidad es de muchos a muchos, por lo cual se recomienda crear una tabla intermedia o de llaves
+quedando como resultado 3 tablas, tabla padre, tabla hijo y tabla intermedia de llaves.
+
+Para llevarlo a una relacion de clases, solo mapearemos 2: La clase PADRE y la clase HIJO,
+	Ejemplo, un objeto A tiene una lista de objetos B, y un objeto B a su vez tiene una lista de objetos A, 
+	Esto quiere decir que es BIDIRECCIONAL
+
+Como hacemos esto en Hibernate para definirlo en las clases:
+
+La entidad Owner (Padre) debe tener la notacion @ManyToMany y agregar la segunda notacion @JoinTable para definir la tabla a mapear
+definiendo dentro de esta notacion con una "subnotacion" dentro @JoinColumns para definir la relacion entre las 2 tablas, o decir como y con quien va unida
+en el primer @JoinColumn va la definicion del id de la tabla padre (joinColumns)
+en el segundo @JoinColumn va la definicion del id de la tabla hijo (inverseJoinColumns)
+
+Y la entidad No Owner (Hijo), solo pondremos la notacion @ManyToMany, y solo dejar mapeado el nombre de la entidad a relacionar. 
+
+Ejemplo:
+
+	Entidad Owner
+	@ManyToMany(cascade = {CascadeType.ALL}) 
+	@JoinTable(
+		name="ProfesorModulo",
+		joinColumns={@JoinColumn(name = "IdProfesor")},
+		inverseJoinColumns={@JoinColumn(name = "IdModulo")})
+		
+	---
+
+	Entidad No Owner
+	@ManyToMany(cascade = {CascadeType.ALL}, mappedBy="entityName")
+
+
+#####################################################################
+#####################################################################
+Video #26 - Mapeando Relaciones a nuestro Proyecto:
+
+"La idea de hibernet es ver todo como objeto"
+
+Sesiones en Hibernate: Para comenzar a gestionar, eliminar, ejecutar un query o sea cual sea la accion que deseemos realizar, debemos definir 3 objetos principalmente:
+	SessionFactory sessionFactory;
+	Configuration configuration;
+		(Estas 2 Provienen de las librerias de hibernet)
+	Session session;
+	
+Los 2 primeros objetos lo que haran sera leer los archivos de conifguracion (cfg.xml), van a ver la url de la bd y todo lo que este especificado ahi, 
+y con el objeto session (el tercer objeto) a traves de el va a permitir o abrir una puerta para manipular la informacion o nuestros datos a nuestro antojo.
+	
+Una vez instanciado/definido el objeto sesion, cabe destacar que Hibernet trabaja a nivel de Transacciones, una caracteristica de las transacciones de programacion es que: O todo se hace o Nada se cumple, esto trae una gran ventaja ya que por ejemplo si existen consultas anidadas, existe la posibilidad de que  resulta todo exitosamente o nada se lleva a cabo y no sucede nada.
+
+Siempre que necesitemos realizar consultas, manejo de informacion, o ejecutar un CRUD con la base de datos DEBEMOS tener definido nuestro objeto de session.
+Es por eso que:
+	
+	session.beginTransaction(); // -> inicia la transaccion
+	session.save(media); // -> permite guardar o insertar un registro y recibe como parametro el objeto a insertar o la tupla a insertar
+	session.getTransaction(); // -> obtiene la transaccion iniciada, ejecuta todos los querys y haz commit y ejecutarlos ya sobre la BD.
+	
+	Ejemplo de transaccion en Hibernate:
+	
+	Camion camion = new Camion("ABC123", 2.0, "el tipo", 4.5);
+	Session session = sessionFactory.openSession();
+	session.beginTransaction();
+	session.save(camion);
+	session.getTransaction().commit();
+	
+	Ejemplo real en base al proyecto desarrollado:
+	
+	//Primero creamos el sessionFactory
+		SessionFactory sessionFactory;
+		
+	//Despues iniciamos la clase que leerá nuestro archivo de configuracion
+		Configuration configuration = new Configuration();
+	//Con la siguiente sentencia le decimos que inicie y que lea la configuracion descrita en el archivo de configuracion de la session de nuestra bd
+		configuration.configure();
+		
+	//Luego a nuestro objeto sessionFactory le asignamos el resultado de la llamada qe hace el objeto configuration para construir una nueva fabrica de sesiones
+		sessionFactory = configuration.buildSessionFactory();
+	//Luego abrimos la sesion
+		Session session = sessionFactory.openSession();
+
+	//Ya estariamos en condiciones de ingresar informacion a la base datos
+		Course course = new Course("Curso de Java Avanzado","Tema 1","RestAPI");
+		session.beginTransaction();
+		session.save(course);
+		session.getTransaction().commit();
+		
+	//Otro ejemplo
+    Teacher teacher = new Teacher("Esteban Ramos","urlAvatar");
+    session.beginTransaction();
+    session.save(teacher);
+    session.getTransaction().commit();	
+
+		
+OTRO punto importante es que debemos mapear adicionalmente nuestras clases en nuestro archivo de configuracion, osea no es suficiente que por fuera hibernate sepa que es una entidad o que entidad es la que está mapeando, sino que tambien es importante decir que esta entidad se va a encontrar en la base de datos, o indicarle a partir del archivo de configuracion las clases que va a encontrar o identificar como tablas en la base de datos.
+	
+	En nuestro archivo de configuracion:
+		<mapping class="com.platzi.hibernate.model.Course" />
+		<mapping class="com.platzi.hibernate.model.Teacher" />
+		<mapping class="com.platzi.hibernate.model.SocialMedia" />
+		<mapping class="com.platzi.hibernate.model.TeacherSocialMedia" />
+	
+---
+	
+En el Proyecto trabajaremos las siguientes relaciones:
+
+- One to Many - Uno a muchos
+
+	La clase Teacher tiene una colección de Cursos
+	La clase Curso tiene una referencia de Curso
+	Nuestra clase Padre (Owner) será Teacher
+	La clase Hijo (No Owner) Courses
+	Por lo tanto en la clase Teacher donde tenemos nuestra colección de Cursos colocaremos la anotación: @OnetoMany(mappedBy=“teacher”)
+	Mientras que en la clase Course donde tenemos la referencia de Teacher colocaremos la anotación: @ManyToOne(optional=true, fetch=FetchType.EAGER) y además @JoinColumn(name=“id_teacher”) aquí se especifica el nombre del campo de la tabla que tiene la llave foránea
+
+- Many to Many - Muchos a muchos
+
+	La relación de Teacher hacia TeacherSocialMedia va de Uno a muchos
+	La relación de SocialMedia hacia TeacherSocialMedia va de Uno a muchos
+	Dicho lo anterior la clase Teacher tiene una colección de TeacherSocialMedias y
+	la clase SocialMedia también
+	Por lo tanto en la clase Teacher donde tenemos la colección TeacherSocialMedia colocaremos la siguiente anotación: @OneToMany(cascade=CascadeType.ALL) y @JoinColumn(name=“id_teacher”) donde se especifica el nombre del campo de la tabla que tiene la llave foránea
+	Ahora en la clase SocialMedia haremos algo similar vamos a la colección TeacherSocialMedia colocamos: @OneToMany y @JoinColumn(name=“id_social_media”) que especifica el nombre del campo de la tabla que tiene la llave foránea.
+	Por último en la clase TeacherSocialMedia vamos a la referencia de Teacher y SocialMedia y ponemos: @ManyToOne(fetch=FetchType.EAGER) junto con @JoinColumn(name=“id_teacher”) para teacher y @JoinColumn(name=“id_social_media”) para socialMedia los cuales indican el campos que tienen la llave foránea.
+
+#####################################################################
+#####################################################################
+Video #27 - Queries a la base de datos usando Hibernate:
+
+
+
+
+
+
+#####################################################################
+#####################################################################
+Video #28 - ¿Que es un DAO?:
+
+
+
+#####################################################################
+#####################################################################
+Video #29 - Manejo de Sesiones en Hibernate:
+
+
+
+#####################################################################
+#####################################################################
+Video #30 - ¿Que es un framework?:
+
+
+
+#####################################################################
+#####################################################################
+Video #31 - ¿Que es Spring Framework?:
+
+
+
+#####################################################################
+#####################################################################
+Video #32 - Spring Bean Factory:
+
+
+
+#####################################################################
+#####################################################################
+Video #33 - Composicion de Spring, Spring MVC y Spring Boot:
+
+
+
+#####################################################################
+#####################################################################
+Video #34 - Integrando Spring al Proyecto:
+
+
+
+#####################################################################
+#####################################################################
+Video #35 - Componentes de un proyecto en Spring Boot:
+
+
+
+#####################################################################
+#####################################################################
+Video #36 - Configurando Hibernate con Spring:
+
+
+
+#####################################################################
+#####################################################################
+Video #37 - Configurando DAO's con Spring y Filtros con HQL Hibernate:
+
+
+
+#####################################################################
+#####################################################################
+Video #38 - Resolviendo el reto de CRUD y mas de HQL:
+
+
+
+#####################################################################
+#####################################################################
+Video #39 - Hibernate HQL Joins:
+
+
+
+#####################################################################
+#####################################################################
+Video #40 - ¿Que es y como funciona API Rest?:
+
+
+
+#####################################################################
+#####################################################################
+Video #41 - Configurando Service:
+
+
+
+#####################################################################
+#####################################################################
+Video #42 - Creando Controller API Rest por Entidad:
+
+
+
+#####################################################################
+#####################################################################
+Video #43 - Definiendo metodos, Get y Post:
+
+
+
+#####################################################################
+#####################################################################
+Video #44 - Metodos Patch y Delete:
+
+
+
+#####################################################################
+#####################################################################
+Video #45 - Manejando Mensajes de Error Personalizados:
+
+
+
+#####################################################################
+#####################################################################
+Video #46 - Manejando Diltros en REST:
+
+
+
+#####################################################################
+#####################################################################
+Video #47 - Subir imagenes en un API Rest:
+
+
+
+#####################################################################
+#####################################################################
+Video #48 - Mostrar imagenes en un API REST:
+
+
+
+#####################################################################
+#####################################################################
+Video #49 - Eliminar imagenes en un API REST:
+
+
+
+#####################################################################
+#####################################################################
+Video #50 - Relaciones entre Recursos parte 1:
+
+
+
+#####################################################################
+#####################################################################
+Video #51 - Relaciones entre Recursos parte 2:
+
+
+
+#####################################################################
+#####################################################################
+Video #52 - Deploy de tu proyecto Java en Heroku:
+
+
+
+#####################################################################
+#####################################################################
+Video #53 - Sube tu proyecto a Heroku con Git:
+
+
+
+#####################################################################
+#####################################################################
+Video #54 - Conclusion:
+
+
+
+#####################################################################
+#####################################################################
+
