@@ -45,7 +45,7 @@ public class Course implements Serializable {
 		this.name = name;
 		this.themes = themes;
 		this.project = project;
-		this.teacher = teacher;
+		//this.teacher = teacher;
 	}
 	public Long getIdCourse() {
 		return idCourse;
