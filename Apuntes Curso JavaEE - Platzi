@@ -996,7 +996,14 @@ Un DAO significa Data Access Object, es un patron de diseño que permite la cons
     Verlo como forma de API de metodos
     API consiste en metodos CRUD (Create, Read, Update, Delete)
 
+Aveces es conveniente usar interfaces para compartir metodos entre clases o familias de clases, las interfaces son ejecucion
+especificas y abstractas de metodos, para este caso de los DAO's es conveniente usar interfaces para evitar duplicidad de codigo
+o para compartir los mismo métodos.
 
+Spring nos pide/exige que definamos/usemos interfaces para cada DAO o para definir los DAO's
+
+Definir interfaces para cada DAO, es decir una interfaz donde se definan los metodos claves del dao y una clase para el DAO
+Una interfaz y una clase por cada ENTIDAD.
 
 
 ---
