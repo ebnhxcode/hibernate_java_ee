@@ -1005,6 +1005,93 @@ Spring nos pide/exige que definamos/usemos interfaces para cada DAO o para defin
 Definir interfaces para cada DAO, es decir una interfaz donde se definan los metodos claves del dao y una clase para el DAO
 Una interfaz y una clase por cada ENTIDAD.
 
+Es conveniente organizar los elementos a traves de packages para mantener un orden estructurado de las clases y las interfaces para cada entidad
+
+Ejemplo de Clase de la Sesion global
+	package com.platzi.hibernate.dao;
+	import org.hibernate.Session;
+	import org.hibernate.SessionFactory;
+	import org.hibernate.cfg.Configuration;
+
+
+	public class PlatziSession {
+		
+		public Session getSession () {
+		      SessionFactory sessionFactory;
+		      Configuration configuration = new Configuration();
+		      configuration.configure();
+		      sessionFactory = configuration.buildSessionFactory();
+		      Session session = sessionFactory.openSession();
+			return session;
+		}
+		
+	}
+
+
+Ejemplo de Interfaz para Teacher
+
+	package com.platzi.hibernate.dao;
+	import com.platzi.hibernate.model.Teacher;
+	import java.util.List;
+
+	public interface TeacherDao {
+		
+		void saveTeacher (Teacher teacher);
+		
+		void deleteTeacherById(Long idTeacher);
+
+		void updateTeacher(Teacher teacher);
+		
+		List<Teacher> findAllTeachers();
+		
+		Teacher findById(Long idTeacher);
+		
+		Teacher findByName(String name);
+	}
+
+Ejemplo de la clase que implementa la interfaz
+
+	package com.platzi.hibernate.dao;
+
+	import java.util.List;
+
+	import com.platzi.hibernate.model.Teacher;
+
+	public class TeacherDaoImpl extends PlatziSession implements TeacherDao {
+
+		public void saveTeacher(Teacher teacher) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		public void deleteTeacherById(Long idTeacher) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		public void updateTeacher(Teacher teacher) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		public List<Teacher> findAllTeachers() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		public Teacher findById(Long idTeacher) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		public Teacher findByName(String name) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+	}
+
+
 
 ---
 DAO significa Data Access Object
