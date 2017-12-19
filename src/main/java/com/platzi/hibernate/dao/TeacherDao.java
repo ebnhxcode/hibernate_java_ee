@@ -12,6 +12,8 @@ public interface TeacherDao {
 	
 	List<Teacher> findAllTeachers();
 	
+	List<Teacher> findTeachersByName(String name);
+	
 	Teacher findById(Long idTeacher);
 	
 	Teacher findByName(String name);

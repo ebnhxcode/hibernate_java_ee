@@ -6,12 +6,17 @@ import org.hibernate.cfg.Configuration;
 
 public class PlatziSession {
 	
-	public Session getSession () {
-        SessionFactory sessionFactory;
+	private Session session;
+	
+	public PlatziSession() {
         Configuration configuration = new Configuration();
         configuration.configure();
-        sessionFactory = configuration.buildSessionFactory();
-        Session session = sessionFactory.openSession();
+        SessionFactory sessionFactory = configuration.buildSessionFactory();
+        session = sessionFactory.openSession();
+        session.beginTransaction();
+	}
+
+	public Session getSession () {
 		return session;
 	}
 	

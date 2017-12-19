@@ -1106,12 +1106,32 @@ Update
 Delete
 Generaremos un DAO de cada entidad para ello debemos crear una Interfaz donde se declaren los métodos de API y una clase que implemente la interfaz.
 
+https://www.petrikainulainen.net/spring-data-jpa-tutorial/
+
 
 #####################################################################
 #####################################################################
 Video #29 - Manejo de Sesiones en Hibernate:
 
+En hibernate se recomienda usar *.persist(object); en vez de *.save(object);, aunque practicamente hacen lo mismo
 
+Hibernate provee metodos basicos para el manejo de consultas, pero tambien provee un lenguaje de consultas llamado HQL
+el cual significa Hibernate Query Languaje, dentro de sus principales caracteristicas:
+	Se parece a SQL, sin embargo comparado con SQL NO es SQL , solo se parece
+	Es completamente orientado a objetos y comprende nociones como herencia, polimorfismo y asociacion.
+
+
+
+---
+Para crear un objeto sesión que sea reutilizable en nuestra clase PlatziSession crearemos un constructor y dentro implementaremos todo el código de conexión a base de datos y apertura del objeto session.
+Por último crearemos el método getSession() para estar recuperando el objeto.
+A a partir de esto puedo llamar al objeto en los métodos DAO por ejemplo si quiero guardar un teacher lo haría así:
+platziSession.getSession.persist(teacher);
+platziSession.getSession.getTransaction().commit();
+Hql en Hibernate
+Hql significa Hibernate Query Language el cual es completamente orientado a objetos.
+Si quisieramos ejecutar un query SELECT podemos hacer lo siguiente:
+platziSession.getSession().createQuery("from Teacher").list();
 
 #####################################################################
 #####################################################################
