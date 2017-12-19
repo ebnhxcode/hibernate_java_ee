@@ -992,9 +992,12 @@ Video #28 - ¿Que es un DAO?:
 
 DAO no son exclusivos de Hibernate, estan disponibles desde Java SE.
 Un DAO significa Data Access Object, es un patron de diseño que permite la construccion de API REST.
-    Es un patron de diseño
+    Es un patron de diseño, que nos ayuda a tener un API
     Verlo como forma de API de metodos
     API consiste en metodos CRUD (Create, Read, Update, Delete)
+
+
+
 
 ---
 DAO significa Data Access Object
