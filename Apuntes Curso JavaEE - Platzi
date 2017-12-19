@@ -783,70 +783,100 @@ Ejemplo:
 #####################################################################
 Video #26 - Mapeando Relaciones a nuestro Proyecto:
 
-"La idea de hibernet es ver todo como objeto"
+Reglas:
+Es necesario aclarar que al definir los objetos instanciados en las clases, se deben mapear con las entidades asociadas a esos objetos como si de relaciones/cardinalidades se refiera, si una clase instancia un objeto de otra clase, se le debe informar mediante notaciones (@) a hibernate donde y con que objeto se mapeara la relacion, de tal forma que la base de datos se maneje como objetos y las consultas se creen automaticamente con hibernate.
 
-Sesiones en Hibernate: Para comenzar a gestionar, eliminar, ejecutar un query o sea cual sea la accion que deseemos realizar, debemos definir 3 objetos principalmente:
-	SessionFactory sessionFactory;
-	Configuration configuration;
-		(Estas 2 Provienen de las librerias de hibernet)
-	Session session;
-	
-Los 2 primeros objetos lo que haran sera leer los archivos de conifguracion (cfg.xml), van a ver la url de la bd y todo lo que este especificado ahi, 
-y con el objeto session (el tercer objeto) a traves de el va a permitir o abrir una puerta para manipular la informacion o nuestros datos a nuestro antojo.
-	
-Una vez instanciado/definido el objeto sesion, cabe destacar que Hibernet trabaja a nivel de Transacciones, una caracteristica de las transacciones de programacion es que: O todo se hace o Nada se cumple, esto trae una gran ventaja ya que por ejemplo si existen consultas anidadas, existe la posibilidad de que  resulta todo exitosamente o nada se lleva a cabo y no sucede nada.
+Por ejemplo (Omitiendo los getters, setters y otras declaraciones):
 
-Siempre que necesitemos realizar consultas, manejo de informacion, o ejecutar un CRUD con la base de datos DEBEMOS tener definido nuestro objeto de session.
-Es por eso que:
-	
-	session.beginTransaction(); // -> inicia la transaccion
-	session.save(media); // -> permite guardar o insertar un registro y recibe como parametro el objeto a insertar o la tupla a insertar
-	session.getTransaction(); // -> obtiene la transaccion iniciada, ejecuta todos los querys y haz commit y ejecutarlos ya sobre la BD.
-	
-	Ejemplo de transaccion en Hibernate:
-	
-	Camion camion = new Camion("ABC123", 2.0, "el tipo", 4.5);
-	Session session = sessionFactory.openSession();
-	session.beginTransaction();
-	session.save(camion);
-	session.getTransaction().commit();
-	
-	Ejemplo real en base al proyecto desarrollado:
-	
-	//Primero creamos el sessionFactory
-		SessionFactory sessionFactory;
-		
-	//Despues iniciamos la clase que leerá nuestro archivo de configuracion
-		Configuration configuration = new Configuration();
-	//Con la siguiente sentencia le decimos que inicie y que lea la configuracion descrita en el archivo de configuracion de la session de nuestra bd
-		configuration.configure();
-		
-	//Luego a nuestro objeto sessionFactory le asignamos el resultado de la llamada qe hace el objeto configuration para construir una nueva fabrica de sesiones
-		sessionFactory = configuration.buildSessionFactory();
-	//Luego abrimos la sesion
-		Session session = sessionFactory.openSession();
+//Para la clase Course
+@Entity
+@Table(name="course")
+public class Course implements Serializable {
+	/*
+        fetch=FetchType.EAGER indica que al traer los datos de course, 
+        forza traer tambien los datos relacionados con teacher
+        ---
+        Esto se lee, 
+        Un curso le pertenece a un teacher
+        
+        Tambien en plural se lee:
+        Cursos le pertenecen a un solo teacher, 
+        para que se respete la relacion, many to one.
+        
+        Y se define con @JoinColumn la columna pk de referencia
+    */
+	@ManyToOne(optional=true,fetch=FetchType.EAGER)
+	@JoinColumn(name="id_teacher")
+	private Teacher teacher;
+}
 
-	//Ya estariamos en condiciones de ingresar informacion a la base datos
-		Course course = new Course("Curso de Java Avanzado","Tema 1","RestAPI");
-		session.beginTransaction();
-		session.save(course);
-		session.getTransaction().commit();
-		
-	//Otro ejemplo
-    Teacher teacher = new Teacher("Esteban Ramos","urlAvatar");
-    session.beginTransaction();
-    session.save(teacher);
-    session.getTransaction().commit();	
 
-		
-OTRO punto importante es que debemos mapear adicionalmente nuestras clases en nuestro archivo de configuracion, osea no es suficiente que por fuera hibernate sepa que es una entidad o que entidad es la que está mapeando, sino que tambien es importante decir que esta entidad se va a encontrar en la base de datos, o indicarle a partir del archivo de configuracion las clases que va a encontrar o identificar como tablas en la base de datos.
+//Para la clase Teacher
+@Entity
+@Table(name="teacher")
+public class Teacher implements Serializable {
 	
-	En nuestro archivo de configuracion:
-		<mapping class="com.platzi.hibernate.model.Course" />
-		<mapping class="com.platzi.hibernate.model.Teacher" />
-		<mapping class="com.platzi.hibernate.model.SocialMedia" />
-		<mapping class="com.platzi.hibernate.model.TeacherSocialMedia" />
+	/*
+    Estas son colecciones del tipo de la clase
+	@OneToMany(cascade=CascadeType.ALL) 
+    En caso que se conserve la relacion y afecte a los datos de otra tabla
+    mappedBy indica de donde viene la relacion, de donde se esta mapeando y 
+    con el objeto instanciado en la clase Teacher automaticamente se hace la    
+    relacion
+    ---
+    Esto se lee: 
+        La clase Teacher tiene una coleccion de cursos
+        Es asi como tambien decimos que un teacher tiene muchos cursos
+        Y en la relacion inversa decimos que un curso le PERTENECE a un teacher
+
+        Y se define despues, la tabla a mapear, "mapeado de.." y se ingresa el nombre de la tabla a mapear
+    */
+
+	@OneToMany(mappedBy="teacher") 
+	private Set<Course> courses;
 	
+    /*
+    Esta otra relacion se lee:
+        La clase Teacher tiene una coleccion de TeacherSocialMedia
+    */
+	@OneToMany(cascade=CascadeType.ALL)
+	@JoinColumn(name="id_teacher")
+	private Set<TeacherSocialMedia> teacherSocialMedias;
+}
+
+//Para la clase TeacherSocialMedia
+@Entity
+@Table(name="teacher_social_media")
+public class TeacherSocialMedia implements Serializable {
+    /*
+    Es necesario agregar la cardinalidad inversa mapeando la relacion
+    y definiendo la columna pk para mapear la tabla
+    */	
+
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="id_teacher")
+	private Teacher teacher;
+	
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="id_social_media")
+	private SocialMedia socialMedia;
+}                                                                                          
+
+//Para la clase SocialMedia
+@Entity
+@Table(name="social_media
+public class SocialMedia implements Serializable {
+    /*
+    No es necesario agregar eliminacion en cascada pues es opcional agregar
+    una social media para teacher, es obligatorio agregar la notacion
+    @JoinColumn para realizar la referencia a la tabla a mapear
+    */	
+
+	@OneToMany
+	@JoinColumn(name="id_social_media")
+	private Set<TeacherSocialMedia> teacherSocialMedias;
+}
+
 ---
 	
 En el Proyecto trabajaremos las siguientes relaciones:
@@ -874,15 +904,110 @@ En el Proyecto trabajaremos las siguientes relaciones:
 #####################################################################
 Video #27 - Queries a la base de datos usando Hibernate:
 
+Para poder utilizar todos los mapeos y configuraciones que hemos hecho al proyecto es necesario utilizar las siguientes clases:
+
+SessionFactory
+Configuration
+Session
+
+Ellos nos dan acceso a nuestra base de datos leyendo nuestro archivo de configuración que tiene los parámetros de conexión y las clases mapeadas que fungirán como entidades.
+
+Una vez obtenido nuestro objeto session si queremos ejecutar un query en Hibernate debemos iniciar una transacción, posteriormente declarar el query y finalmente ejecutar la transacción con commit.
+
+---
 
 
+"La idea de hibernet es ver todo como objeto"
 
+Sesiones en Hibernate: Para comenzar a gestionar, eliminar, ejecutar un query o sea cual sea la accion que deseemos realizar, debemos definir 3 objetos principalmente:
+	SessionFactory sessionFactory;
+	Configuration configuration;
+		(Estas 2 Provienen de las librerias de hibernet)
+	Session session;
+	
+Los 2 primeros objetos lo que haran sera leer los archivos de conifguracion (cfg.xml), van a ver la url de la bd y todo lo que este especificado ahi, 
+y con el objeto session (el tercer objeto) a traves de el va a permitir o abrir una puerta para manipular la informacion o nuestros datos a nuestro antojo.
+	
+Una vez instanciado/definido el objeto sesion, cabe destacar que Hibernet trabaja a nivel de Transacciones, una caracteristica de las transacciones de programacion es que: O todo se hace o Nada se cumple, esto trae una gran ventaja ya que por ejemplo si existen consultas anidadas, existe la posibilidad de que  resulta todo exitosamente o nada se lleva a cabo y no sucede nada.
 
+Siempre que necesitemos realizar consultas, manejo de informacion, o ejecutar un CRUD con la base de datos DEBEMOS tener definido nuestro objeto de session.
+Es por eso que:
+	
+	session.beginTransaction(); // -> inicia la transaccion
+	session.save(media); // -> permite guardar o insertar un registro y recibe como parametro el objeto a insertar o la tupla a insertar
+	session.getTransaction(); // -> obtiene la transaccion iniciada, ejecuta todos los querys y haz commit y ejecutarlos ya sobre la BD.
+	
+	Ejemplo de transaccion en Hibernate:
+	
+	Camion camion = new Camion("ABC123", 2.0, "el tipo", 4.5);
+	Session session = sessionFactory.openSession();
+	session.beginTransaction();
+	session.save(camion);
+	session.getTransaction().commit();
+    session.close();
+	
+	Ejemplo real en base al proyecto desarrollado:
+	
+	//Primero creamos el sessionFactory
+		SessionFactory sessionFactory;
+		
+	//Despues iniciamos la clase que leerá nuestro archivo de configuracion
+		Configuration configuration = new Configuration();
+	//Con la siguiente sentencia le decimos que inicie y que lea la configuracion descrita en el archivo de configuracion de la session de nuestra bd
+		configuration.configure();
+		
+	//Luego a nuestro objeto sessionFactory le asignamos el resultado de la llamada qe hace el objeto configuration para construir una nueva fabrica de sesiones
+		sessionFactory = configuration.buildSessionFactory();
+	//Luego abrimos la sesion
+		Session session = sessionFactory.openSession();
+
+	//Ya estariamos en condiciones de ingresar informacion a la base datos
+		Course course = new Course("Curso de Java Avanzado","Tema 1","RestAPI");
+		session.beginTransaction();
+		session.save(course);
+		session.getTransaction().commit();
+        session.close();
+		
+	//Otro ejemplo
+    Teacher teacher = new Teacher("Esteban Ramos","urlAvatar");
+    session.beginTransaction();
+    session.save(teacher);
+    session.getTransaction().commit();	
+    session.close();
+
+		
+OTRO punto importante es que debemos mapear adicionalmente nuestras clases en nuestro archivo de configuracion, osea no es suficiente que por fuera hibernate sepa que es una entidad o que entidad es la que está mapeando, sino que tambien es importante decir que esta entidad se va a encontrar en la base de datos, o indicarle a partir del archivo de configuracion las clases que va a encontrar o identificar como tablas en la base de datos.
+	
+	En nuestro archivo de configuracion:
+		<mapping class="com.platzi.hibernate.model.Course" />
+		<mapping class="com.platzi.hibernate.model.Teacher" />
+		<mapping class="com.platzi.hibernate.model.SocialMedia" />
+		<mapping class="com.platzi.hibernate.model.TeacherSocialMedia" />
+	
+Como conclusion, en la medida que se mapeen bien las relaciones, las consultas se automatizaran correctamente y sin problemas, pero es importante definir en las clases el mapeo de las relaciones de los objetos.
 
 #####################################################################
 #####################################################################
 Video #28 - ¿Que es un DAO?:
 
+DAO no son exclusivos de Hibernate, estan disponibles desde Java SE.
+Un DAO significa Data Access Object, es un patron de diseño que permite la construccion de API REST.
+    Es un patron de diseño
+    Verlo como forma de API de metodos
+    API consiste en metodos CRUD (Create, Read, Update, Delete)
+
+---
+DAO significa Data Access Object
+El cuál es un patrón de diseño que nos permite crear un API de un Objeto específico.
+
+Un APi significará crear todas las acciones que se pueden realizar hacia un objeto.
+Por ejemplo un CRUD:
+
+Create
+Read
+Update
+Delete
+Generaremos un DAO de cada entidad para ello debemos crear una Interfaz donde se declaren los métodos de API y una clase que implemente la interfaz.
 
 
 #####################################################################

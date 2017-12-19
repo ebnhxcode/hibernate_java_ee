@@ -33,7 +33,6 @@ public class Course implements Serializable {
 	//fetch indica que al traer los datos de course, forza traer tambien los datos relacionados con teacher
 	@ManyToOne(optional=true,fetch=FetchType.EAGER)
 	@JoinColumn(name="id_teacher")
-	
 	private Teacher teacher;
 	
 	public Course() {
