@@ -18,6 +18,10 @@ public class App
     public static void main( String[] args )
     {
     	System.out.println( "Hello World!" );
+    	
+    	//Implementacion interfaz teacher DAO
+    	TeacherDaoImpl teacherDaoImpl = new TeacherDaoImpl();
+    	
     	/*
         SessionFactory sessionFactory;
         Configuration configuration = new Configuration();
@@ -37,9 +41,6 @@ public class App
         session.save(course);
         session.getTransaction().commit();
         */
-    	
-    	//Implementacion interfaz teacher DAO
-    	TeacherDaoImpl teacherDaoImpl = new TeacherDaoImpl();
     	
     	//Guardar un teacher
     	/*

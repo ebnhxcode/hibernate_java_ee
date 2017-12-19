@@ -1137,12 +1137,80 @@ platziSession.getSession().createQuery("from Teacher").list();
 #####################################################################
 Video #30 - ¿Que es un framework?:
 
+Spring: Un framework es un concepto conocido como Inversión de Control
+	Principio de Hollywood -> No nos llames, nosotros te llamaremos.
 
+Inversion de Control:
+	Libreria vs Framework
+	Libreria: Es un conjunto de clases, metodos, etc. que son invocadas por el flujo del programa
+		y que posteriormente devuelven el control a este.
+		
+		Ejemplo: Estamos codeando, tenemos el control del codigo, despues llamamos a una LIBRERIA, 
+		Ejecutamos el contenido de la libreria, y despues una vez que se ejecuto el codigo de la libreria,
+		Regresa el control o flujo de nuestro codigo
+		
+La forma como estuvimos trabajando anteriormente era : Programacion Secuencial
+
+La inversion de control de codigo empieza a partir del concepto de Framework.
+
+	Framework: Un framework controla el flujo del codigo, el decide cuando llamar nuestro codigo.
+		1.- Se invoca la libreria y el codigo se queda escuchando
+		2.- Al darse un evento especifico se ejecuta nuestro codigo
+		3.- Regresa al flujo de la libreria para continuar escuchando
+		
+Esto se conoce como Programación por Eventos, la programacion por eventos utiliza inversion de control.
+Spring funciona con inversion de control, en algun punto spring usa librerias que van a tomar el control del proyecto
+y luego le dara paso al programador, es decir, spring dará paso al programador para que ejecute su propio codigo.
+
+---
+
+Librería: conjunto de clases, métodos etc. que son invocadas por el flujo del programa y que posteriormente devuelven el control a este.
+Framework: Un framework controla el flujo del código, él decide cuándo llamar nuestro código.
+Librería - Programación secuencial.
+Framework - Programación por eventos.
+Inversión de Flujo o de control
+Se da cuando el programador deja de tener el control del flujo del código y en su lugar el framework toma el control del programa, llamando al código cuando suceda un evento específico.
 
 #####################################################################
 #####################################################################
 Video #31 - ¿Que es Spring Framework?:
 
+Spring: Implementa un Contenedor que se encarga de gestionar la creación y destrucción de los objetos (instancias).
+	Toma el control de cuando, como y donde crear e instanciar objetos para optimizar el performance de la aplicacion 
+	para evitar el desperdicio de memoria a traves de un contenedor que genera la inyeccion de dependencias, por lo cual
+	ya no se necesita crear instancias de objetos, sino que este contenedor seria el "new" que crea las instancias a los
+	objetos a llamar/utilizar y sabe hasta que momento mantenerlos vivos.
+	
+Inyeccion de dependencias es hacer que una clase A inyecte objetos en una clase B:
+	La clase A le diga que objetos crear a la clase B y evitar que la clase B decida que objetos crear.
+	
+Todo esto surge porque los modulos de alto nivel no deben depender de los modulos de bajo nivel.
+Y lo que se busca es desacoplar la dependencia que existe entre la clase padre y la clase hija, esto lo solucionamos
+implementando interfaces y polimorfismo, ya que las interfaces pueden ser implementadas en muchas clases.
+Entonces, desacoplaremos los objetos hallando la forma mas genérica de hacerlo -> Polimorfismo, asi quega mas generico, mas reutilizable.
+
+Primero se deben analizar cuales son los metodos que corresponden a una clase como mas abstracta, 
+la forma en como se soluciona es implementando interfaces o clases mas abstractas con metodos definidos,
+pero como spring lo requieres es el uso, deifinicion e implementacion de interfaces.
+
+Si el metodo que esta obstruyendo o haciendo dependiente esas clases, lo puedo quitar y lo puedo abstraer y dejarlo definido en una clase para 
+asi reutilizarlo tantas veces como sea requerido, esto lo hacemos a través de interfaces, gracias a las interfaces conseguimos abstraer la relacion de que una clase A depende de una clase B sin importar la implementación.
+
+	
+
+
+---
+Spring usa inversión de control, específicamente controlará la creación y destrucción de objetos.
+Un programa tradicional de java tendrá en su método main todas las llamadas a los objetos secuencialmente.
+Con Spring framework tendremos las llamadas a los objetos se concentrarán en un contenedor y de este se encargará Spring.
+Podemos decir que la clase A para ser llamada y convertirse en objeto, depende de la clase Principal (la que contiene el método main) la llame. Entonces si se implementa el contenedor de Spring en la clase Principal decimos que Spring está inyectando el objeto A, es decir Spring está inyectando la dependencia.
+Tenemos lo siguiente:
+Clase Vehículo - A
+Clase Motor - B
+En el ejemplo la clase Vehículo inyecta directa y explícitamente la clase Motor, la clase A inyecta la clase B.
+Debemos evitar que la clase B decida qué objetos crear.
+La forma de desacoplar esta dependencia directa es creando una clase más genérica, nos referimos a una interfaz que tenga métodos que puedan ser implementados en varias clases, esta Interfaz será la indicada a inyectar en la clase A (Vehículo) pues al ser genérica se puede crear no solo un tipo de objeto sino varios.
+Recuerda que cuando sobreescribimos métodos y le damos diferente comportamiento a ese comportamiento le llamamos Polimorfismo
 
 
 #####################################################################
