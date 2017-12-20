@@ -1196,6 +1196,15 @@ pero como spring lo requieres es el uso, deifinicion e implementacion de interfa
 Si el metodo que esta obstruyendo o haciendo dependiente esas clases, lo puedo quitar y lo puedo abstraer y dejarlo definido en una clase para 
 asi reutilizarlo tantas veces como sea requerido, esto lo hacemos a través de interfaces, gracias a las interfaces conseguimos abstraer la relacion de que una clase A depende de una clase B sin importar la implementación.
 
+La idea de implementar interfaces y usar polimorfismo es que se puedan definir formas mas reutilizables sin limitar a las clases y sus implementaciones
+en otras clases, de esta forma no se limita a que una clase implemente a otra o que una clase dependa de otra, asi se definirian los metodos a utilizar,
+metodos que serian reutilizables las veces que sea necesario para las clases a las cuales se implementa la interfaz,
+de esta forma es eficaz implementar una inyeccion de dependencias a las clases, para evitar las limitaciones y permitir
+usar interfaces que se encarguen de definir los metodos compartidos, inyectar elementos genericos.
+
+En los contenedores, para la inyeccion de dependencias, se suelen crear y almacenar objetos de servicios, DAO's, y objetos que nos permitan conectarnos con otras partes del sistema como Bases de datos, sistemas, etc.
+
+La inyeccion de depencdencias se da en el contenedor, el contenedor trabaja a traves de los objetos y toma el control sobre las instanciaciones de los objetos de las clases.
 	
 
 
