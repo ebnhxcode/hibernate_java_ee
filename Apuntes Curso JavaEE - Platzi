@@ -1226,6 +1226,27 @@ Recuerda que cuando sobreescribimos métodos y le damos diferente comportamiento
 #####################################################################
 Video #32 - Spring Bean Factory:
 
+Spring se encargara de tomar el control del codigo y encargarse ademas de la inyeccion de dependencias habladas en la clase anterior
+
+Spring ve los Beans un poco mas complejos, spring integra algo conocido como Bean Factory, que vendria a ser la "Fabrica de Beans de Spring"
+
+Los objetos que son la columna vertebral de tu aplicacion y que son administrados por el contenedor Spring se denominan beans,
+estos objetos son como el modelo de datos.
+Entonces, que objetos podemos ver que peden trabajar sobre nuestro modelo de datos que tienen como superpoderes puesto que nos ayudan a ejecutar CRUD's ?
+
+Vamos a tener :
+	Objetos de servicios, estos van a ser el puente entre la vista y el objeto modelo de datos 
+	Los DAO's van a ser considerados BEANs, para que se de la inyeccion de dependencias debemos implementar las interfaces para dar mayor abstraccion
+	
+
+
+---
+Los objetos que son la columna vertebral de tu aplicación y que son administrados por el contenedor Spring se denominan beans.
+Un bean en Spring será un objeto que tenga consigo un CRUD de acciones
+Los DAO’s son Beans, pero usaremos su interfaz pues es el elemento más abstracto y reutilizable.
+También tendremos objetos de servicio y objetos que nos permitan conectarnos con otras partes del sistema como Bases de Datos.
+Cuando nuestra interfaz implementa solo a una clase usaremos la anotación @Autowired
+Cuando la interfaz implementa a varias clases usaremos la anotación @Configuration y @Bean
 
 
 #####################################################################
