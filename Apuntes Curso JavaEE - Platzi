@@ -1234,11 +1234,42 @@ Los objetos que son la columna vertebral de tu aplicacion y que son administrado
 estos objetos son como el modelo de datos.
 Entonces, que objetos podemos ver que peden trabajar sobre nuestro modelo de datos que tienen como superpoderes puesto que nos ayudan a ejecutar CRUD's ?
 
+
+Los objetos Beans seran vistos por spring como un modelo de datos que tiene un CRUD de acciones o que tiene mas acciones por realizar,
+es decir, spring ve a los beans como algo que tiene mucho mas por hacer y no un simple CRUD, sino que tambien metodos y otras funciones.
+
+Objetos que nos van a ayudar a dar funcionalidad a nuestra aplicación:
+
 Vamos a tener :
 	Objetos de servicios, estos van a ser el puente entre la vista y el objeto modelo de datos 
 	Los DAO's van a ser considerados BEANs, para que se de la inyeccion de dependencias debemos implementar las interfaces para dar mayor abstraccion
-	
 
+En Spring:
+En Spring, Para hacer inyeccion de dependencia se deben hacer a traves de las interfaces.
+En Spring nuestras Interfaces seran los BEANS
+Otros objetos que nos permiten conectarnos con otras partes del sistema como las bases de datos, en hibernet la configuracion quedaba en un XML.
+En Spring, se debe crear una clase que sera un objeto que tendra la configuracion de la base de datos, estos tambien seran considerados beans.
+
+En Resumen, en Spring los 3 tipos de Objetos BEANS son:
+	DAOS
+	Objetos\Clases de configuracion con la base de datos
+	Objetos de Servicio
+
+
+Spring -> Bean Factory :
+	Implementamos la interfraz en un solo tipo de objeto:
+		Las interfaces pueden implementarse en muchos tipos de clases, a partir de una interfaz se implementan una o mas clases
+		Existen 2 casos:
+			- La interfaz se implementa a un solo objeto:
+				Cuando la interfaz se implementa en un solo objeto, en un DAO, es simple indicar que este DAO será un BEAN 
+				y esto lo indicamos con la anotacion @Autowired, siempre que llamemos a un objeto DAO de tipo de la interfaz, y no del tipo implementado.
+				
+			- La interfaz se implementa en muchas clases o muchos tipos de objetos
+			
+	DAO:
+	Se indican con la anotacion @Autowired:
+	
+	
 
 ---
 Los objetos que son la columna vertebral de tu aplicación y que son administrados por el contenedor Spring se denominan beans.
