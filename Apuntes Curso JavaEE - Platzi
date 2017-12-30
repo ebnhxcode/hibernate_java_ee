@@ -1252,25 +1252,67 @@ En Spring, se debe crear una clase que sera un objeto que tendra la configuracio
 
 En Resumen, en Spring los 3 tipos de Objetos BEANS son:
 	DAOS
-	Objetos\Clases de configuracion con la base de datos
+	Objetos\Clases de configuracion con la base de datos y objetos que permiten conectar con otros objetos de configuración
 	Objetos de Servicio
 
 
 Spring -> Bean Factory :
 	Implementamos la interfraz en un solo tipo de objeto:
 		Las interfaces pueden implementarse en muchos tipos de clases, a partir de una interfaz se implementan una o mas clases
-		Existen 2 casos:
-			- La interfaz se implementa a un solo objeto:
+		Existen 2 casos, cuando:
+			- La interfaz se implementa a un solo objeto (por ejemplo a un DAO):
 				Cuando la interfaz se implementa en un solo objeto, en un DAO, es simple indicar que este DAO será un BEAN 
 				y esto lo indicamos con la anotacion @Autowired, siempre que llamemos a un objeto DAO de tipo de la interfaz, y no del tipo implementado.
+				La notacion @Autowired sirve para especificar que el DAO se implementa a un solo objeto (a una sola clase)
 				
 			- La interfaz se implementa en muchas clases o muchos tipos de objetos
-			
+				
 	DAO:
 	Se indican con la anotacion @Autowired:
 	
-	
+Spring en su framework (control de codigo), usa multiples anotaciones para definir que y a donde esta controlando, 
+le deja a la clase el completo control de la instanciacion de objetos y la creacion de nuevas o multiples instancias 
+puesto que le deja el control de cuando y hasta cuando puede Spring mantener el control de las instancias.
 
+Ejemplos:
+
+	----------------------------
+	
+	Ejemplo instancia única:
+	
+	public class GeneradorPlaylist {
+
+		//Aca dejamos el control de spring sobre la instanciacion del objeto
+		@Autowired
+		private BuscadorCanciones buscadorCanciones;
+		
+		public setBuscadorCanciones (BuscadorCanciones buscadorCanciones) {
+			this.buscadorCanciones = buscadorCanciones;
+		}
+		
+		//Resto de metodos de la clase.
+	}
+
+	-----------------------------
+
+	Ejemplo instancias multiples con interfaces:
+	
+	public class GeneradorPlaylist {
+
+		//Aca dejamos el control de spring sobre la instanciacion del objeto
+		@Autowired
+		private BuscadorCanciones buscadorCanciones;
+		
+		public setBuscadorCanciones (BuscadorCanciones buscadorCanciones) {
+			this.buscadorCanciones = buscadorCanciones;
+		}
+		
+		//Resto de metodos de la clase.
+	}
+	
+	
+	-----------------------------
+	
 ---
 Los objetos que son la columna vertebral de tu aplicación y que son administrados por el contenedor Spring se denominan beans.
 Un bean en Spring será un objeto que tenga consigo un CRUD de acciones
@@ -1283,7 +1325,177 @@ Cuando la interfaz implementa a varias clases usaremos la anotación @Configurat
 #####################################################################
 #####################################################################
 Video #33 - Composicion de Spring, Spring MVC y Spring Boot:
+	
+	Composicion de Spring:
+	Es un framework muy grande que contiene muchos componentes:
+	
+	Spring Framework Runtime:
+		->Data Access/Integration
+			-JDBC
+			-ORM
+			-OXM
+			-JMS
+			-Transactions
+		
+		->Web
+			-WebSocket
+			-Servlet
+			-Web
+			-Portlet
 
+		Pequeñas Librerias que nos ayudan a manipular acciones especificas:
+		->AQP
+		->Aspects
+		->Instrumentation
+		->Messaging
+		
+		->Core Container : Se conoce como spring ore, hay incluso libs que solamente implementan esta capa y esta capa trabaja todo lo que vimos en los videos anteriores, la inyeccion de dependencias, la inversion de control, modulo para beans, definir nuestros objetos que van a ser controlados por spring, etc.
+		 todo este core container se refiere al core de spring, es el nucleo de lo que verdaderamente hace springs que es la inyeccion de dependencias.
+
+			Etc:		
+			-Beans
+			-Core
+			-Context
+			-SpEL
+		
+		->Test : Capa para realizar pruebas de codigo
+
+----
+
+	Spring MVC RESTful Web Services Container
+	
+	
+	Archivo de Configuracion de Spring trabaja con esto derivando las peticiones entre objetos como la siguiente Ruta de ejemplo:
+	
+	CLIENT <-(HttpRequests)-> DispatcherServlet(FrontController) -> Handler Mapping -> Controller -> Moedel & View -> DispatcherServlet(FrontController) --> CLIENT
+
+	Ejemplo de como se ve en codigo en un jsp normal:
+	<html>
+		<body>
+			<h1>Spring 3.2.3 MVC web service</h1>
+			<h3>Your message is : ${msg}</h3>
+		</body>
+	</html>
+	
+	Ejemplo de Dispatcher Servlet: 
+	
+	<beans>
+	
+		<bean 
+			class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+			<property>
+				<value>/WEB-INF/</value>
+			</property>
+			<property>
+				<value>.jsp</value>
+			</property>
+		</bean>
+		
+		<bean 
+			class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping">
+		
+		<bean name="/helloWorld.htm"
+					class="/com.javacodegeeks.snippets.enterprise.HelloWorldController" />
+		
+		<bean name="/hello*.htm"
+					class="/com.javacodegeeks.snippets.enterprise.HelloWorldController" />
+		
+	</beans>
+	
+	
+	
+	---
+	
+	Ejemplo Handler Mapping:
+	
+	Manejador de rutas, o mapeos de rutas válidas:
+	
+	<?xml version="1.0" encoding="UTF-8"?>
+	<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://java.sun.com/xml/ns/javaee"
+		xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+		xml:schemaLocation="http://java.sun.com/xml/ns/javaee"
+		xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+		id="WebApp_ID" version="3.0">
+		
+		<display-name>Archetype Created Web Application</display-name>
+		
+		<!-- Este fragmento es obligatorio -->
+		<servlet>
+			<servlet-name>mvc-dispatcher</servlet-name>
+			<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+			<load-on-startup>1</load-on-startup>
+		</servlet>
+		
+		<!-- Despues iremos publcando nuestras rutas -->
+		
+		<servlet-mapping>
+			<servlet-name>mvc-dispatcher</servlet-name>
+			<url-pattern>/</url-pattern>
+		</servlet-mapping>
+		
+	</web-app>
+	
+	
+	-----
+	
+	//PD: Nuestros servlets son nuestros controladores
+	Luego el Handler Mapping lo envia al controller como por ejemplo el siguiente fragmento de codigo:
+	
+	
+	public class HelloWorldController extends AbstractController {
+		@Override
+		protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
+			//Este objeto, su destino final es llegar a un archivo jsp o html para mostrar/renderizar los resultados
+			//Aqui crea o llama al archivo que va a pisar o ejecutar para renderizar
+			ModelAndView model = new ModelAndView ("welloWorld");
+			
+			//aqui lo que se hace es preparar la informacion o las variables a renderizar
+			model.addObject ("msg", "Hello world");
+			return model;
+		}
+	}
+	
+	---
+	
+	Resultado en la Vista:
+	<html>
+		<body>
+			<h1>Spring 3.2.3 MVC web service</h1>
+			<h3>Your message is : ${msg}</h3>
+		</body>
+	</html>
+	
+	
+	
+	
+	---
+	
+	Archivo final, final al response:
+	DispatcherServlet -> response
+	
+	
+	-----
+	
+	
+	SPRING BOOT : Nos va a ayudar mucho en el proyecto que estamos haciendo, no vamos a usar sping mvc aunque nos vamos a basar en algunas librerias de spring mvc, solo algunas.
+	
+	Spring boot como tal no es una libreria, mas bien es un conjunto de librerias, tiene muchas librerias , es el producto de spring, un producto aparte.
+	
+	Nos va a ayudar a simplificar la ampliacion de creacion de aplicaciones.
+	
+	
+	Spring boot:
+		-Nos provee una forma muy sencilla de arrancar desarrollos Spring.
+		-Nos proporciona una serie de caracteristicas
+	
+	
+	
+	
+	
+	
+	
+	
 
 
 #####################################################################
