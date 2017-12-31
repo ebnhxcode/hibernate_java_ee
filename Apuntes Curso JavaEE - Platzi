@@ -1497,13 +1497,93 @@ Video #33 - Composicion de Spring, Spring MVC y Spring Boot:
 #####################################################################
 Video #34 - Integrando Spring al Proyecto:
 
+Al seguir los siguientes pasos podremos crear un proyecto nuevo con spring boot, 
+los elementos a seleecionar son suficientes para la creación de una Rest API.
 
+---
 
+Integrando Spring al proyecto
+
+	Abriremos Spring Tool Suite y daremos click derecho New > Other > Spring > Spring Starter Project
+	Name > ProfesoresPlatzi
+	Type > Seleccionamos Maven
+	Versión de Java > 1.8
+	Packaging > Jar
+	Group > com.platzi
+	Artifact > profesoresplatzi
+	Descrption > Descripción del proyecto
+	Package > com.platzi.profesoresplatzi
+	
+Presionamos Next
+
+	Spring Boot Version > 1.5.2
+	Dependencias:
+	SQL > MySQL y JPA
+	Web > Web
+	
+Presionamos Next
+
+	Dejamos todo como esta y damos click en Finish
 
 
 #####################################################################
 #####################################################################
 Video #35 - Componentes de un proyecto en Spring Boot:
+
+Capas de nuestra aplicación
+
+	Front-end:
+		json
+		
+	Back-end:
+		Controllers: objeto que va a controlar entradas y salidas, algnas ifnromaciones adicionales,etc
+		Services: es la parte intermedia, seran quienes gestionen la fuente de informacion, pueden a puntar un repositorio que apunta a una bd local, peru puede ser el caso que quiera acceder a otro repositorio que no esta en la bd u otra fuente de datos como un archivo por ejemplo un archivo o cualquier cosa de ese estilo, el servicio va a ser quien nos mantiene nuestra logica de negocio y nos va a trabajar nuestra fuente de datos.
+		Repositories: fuentes de datos, binarios, archivos, etc
+			
+			Estos se comunican con la base de datos persistentemente, comunicacion entre db, entradas y salidas de informacion, las salidas son en json.
+			
+	---
+			
+		Como vamos a gestionar esto en Spring boot, a traves de anotaciones: 
+			Estas anotaciones no son exclusivas de spring boot, son exclusivas de spring,
+		
+		
+		Estas son las Jerarquias que tenemos de anotaciones:
+		
+		Es es la etiqueta generica o como etiqueta padre 
+		@Component
+
+		De esta estiqueta "@Component" se desprenden estas otras 3, estas son las mas importantes por que nos componen la parte del backend de nuestra aplicacion:
+		
+			@Controller, la anotacion @Controller nos va a apoyar en la capa de Presentacion, E/S
+				Es la capa de presentacion, aqui se llega cuando solicitas una ruta, tambien utiliza @RequestMapping, va a tener la ruta especificada 
+				con @Controller especificamos/definimos que sera una capa controladora para nuestra capa de presentación.
+			@Service
+				Maneja la logica del negocio, llama a los DAOs y ejecuta calculos relacionados, se va a conectar con @Repository
+				service es quien maneja la fuente de repositorios
+			
+			@Repository
+			
+			@Component, es un componente generico, puede ser reemplazo de las otras 3 anotaciones mencionadas anteriormente, pero es mala práctica,
+				es mejor definir/especificar que juego cada uno para entender de que se trata y que papel tiene cada clase.
+			
+	
+
+---
+
+Capas de nuestra aplicación
+
+	Repositories: Se encarga de conectar y traer datos de la base de datos
+	Services: Coordina las fuentes de datos
+	Controllers: Coordina las entradas y salidas de información
+	Json - FrontEnd: Es lo que el usuario visualiza, los datos en formato json
+	
+	
+Para trabajar estas capas necesitaremos las siguientes anotaciones
+
+	@Repository > Se enfoca en los DAO’s
+	@Service > Servicios, Llama a los DAO’s
+	@Controller > Trabaja con la capa de presentación
 
 
 
