@@ -1487,20 +1487,17 @@ Video #33 - Composicion de Spring, Spring MVC y Spring Boot:
 	
 	Spring boot:
 		-Nos provee una forma muy sencilla de arrancar desarrollos Spring.
-		-Nos proporciona una serie de caracteristicas
+		-Nos proporciona una serie de caracteristicas no funcionales comunes a los proyectos (por ejemplo, servidores embebidos, seguridad, indicadores, configuracion externalizada)
+		-Plantillas de proyectos
+		-No necesita generacion ni configuracion de archivos xml.
+		-Los unicos archivos xml seran los de las dependencias y los artifacts, artifactId
 	
 	
-	
-	
-	
-	
-	
-	
-
-
 #####################################################################
 #####################################################################
 Video #34 - Integrando Spring al Proyecto:
+
+
 
 
 
