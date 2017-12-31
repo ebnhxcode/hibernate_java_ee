@@ -1561,12 +1561,21 @@ Capas de nuestra aplicación
 			@Service
 				Maneja la logica del negocio, llama a los DAOs y ejecuta calculos relacionados, se va a conectar con @Repository
 				service es quien maneja la fuente de repositorios
+				Ejemplos:
+					Si esta fuente, voy con este repositorio
+					Si esta fuente de bd, voy a esta otra fuente
+					Si esta fuente es un archivo, voy con esta otra fuente
+				
+				Service llama a los repository o a los DAOs
 			
-			@Repository
-			
+			@Repository 
+				Es la capa de persistencia de la aplicacion que se utiliza para obtener datos de la base de datos, todas las op. realizadas por la bd.
+				Es decir, todas las operaciones relacionadas con la base de datos son realizadas por este repositorio.
+				Persistencia
+				Tenemos DAO's
+				
 			@Component, es un componente generico, puede ser reemplazo de las otras 3 anotaciones mencionadas anteriormente, pero es mala práctica,
 				es mejor definir/especificar que juego cada uno para entender de que se trata y que papel tiene cada clase.
-			
 	
 
 ---
@@ -1591,12 +1600,46 @@ Para trabajar estas capas necesitaremos las siguientes anotaciones
 #####################################################################
 Video #36 - Configurando Hibernate con Spring:
 
+Crearemos nuestra clase DataBaseConfiguration.java esta reemplazará al archivo hibernate.cfg.xml haremos la instanciación de esta clase a partir de Spring Framework.
+Para que Spring pueda hacer su trabajo de inyección de dependecias es necesario indicar con la anotación @Configuration que será una clase de configuraciones de beans. Por lo tanto también usaremos la anotación @Bean.
+Esta clase también gestionará la sesión de conexión a la base de datos.
+
 
 
 #####################################################################
 #####################################################################
 Video #37 - Configurando DAO's con Spring y Filtros con HQL Hibernate:
 
+	Creamos la clase abstracta de session:
+		
+		AbstractSession.java: Cuando se ejeute la herencia debe ser obligatorio
+			Cuando se ejecute la herencia sea obligatorio sobreescribir todos los metodos 
+			
+
+---
+
+Configurando DAO's con Spring y Filtros con HQL Hibernate
+
+	Los archivos del modelo que teníamos en el proyecto hibernate los copiaremos y pegaremos en nuestro proyecto ProfesoresPlatzi.
+	Crearemos nuestro paquete dao y copiaremos la clase TeacherDaoImpl y la interfaz TeacherDao.
+	Crearemos una clase abstracta llamada a AbstractSession la cual se encargará de llamar a la sesión que gestionamos en el archivo de configuración. Estaremos heredando de esta clase en todos nuestros DAO’s.
+	
+HQL Hibernate Query Language
+
+		Si queremos ejecutar un SELECT hacemos:
+	getSession().createQuery("from Teacher").list();
+	
+		Si queremos ejecutar un UPDATE hacemos:
+	getSession().update(teacher);
+	
+		Si queremos encontrar un Teacher a partir de un Id:
+	getSession().get(Teacher.class, idTeacher);
+	
+		Si queremos encontrar un Teacher a partir de un nombre:
+	(Teacher) getSession().createQuery("from Teacher where name = :name").setParameter("name", name).uniqueResult();
+	
+		Si queremos ejecutar un DELETE hacemos:
+	getSession().delete(teacher);
 
 
 #####################################################################
